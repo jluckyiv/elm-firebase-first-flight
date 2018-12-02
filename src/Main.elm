@@ -4,7 +4,6 @@ import Browser
 import Html exposing (Html, button, div, h1, h2, img, text)
 import Html.Attributes exposing (src)
 import Html.Events exposing (onClick)
-import Json.Encode as Encode
 
 
 
@@ -45,7 +44,11 @@ update msg model =
             )
 
         FromFirebase maybeCount ->
-            ( { model | counter = Maybe.withDefault 0 maybeCount }, Cmd.none )
+            ( { model
+                | counter = Maybe.withDefault 0 maybeCount
+              }
+            , Cmd.none
+            )
 
         NoOp ->
             ( model, Cmd.none )
@@ -76,6 +79,16 @@ subscriptions model =
 
 
 
+---- PORTS ----
+
+
+port fromFirebase : (Maybe Int -> msg) -> Sub msg
+
+
+port toFirebase : Int -> Cmd msg
+
+
+
 ---- PROGRAM ----
 
 
@@ -87,9 +100,3 @@ main =
         , update = update
         , subscriptions = subscriptions
         }
-
-
-port toFirebase : Int -> Cmd msg
-
-
-port fromFirebase : (Maybe Int -> msg) -> Sub msg
