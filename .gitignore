@@ -131,3 +131,4 @@ typings/
 # End of https://www.gitignore.io/api/macos,node,elm,firebase,js
 
 config.js
+build/
